@@ -49,6 +49,18 @@ class TestStudent(unittest.TestCase):
             schedule = self.student.course_schedule()
             self.assertEqual(schedule, "Success")
 
+    def test_course_schedule_failed(self):
+        """
+        In the path "student" comes from the name of the file student.py
+        If you have named the file something else - it will need to match
+        eg, students.py would need "students.requests.get"
+        """
+        with patch("student.requests.get") as mocked_get:
+            mocked_get.return_value.ok = False
+
+            schedule = self.student.course_schedule()
+            self.assertEqual(schedule, "Something went wrong")
+
 
 if __name__ == '__main__':
     unittest.main()
